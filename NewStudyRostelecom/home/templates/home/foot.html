@@ -1,4 +1,5 @@
 <!-- FOOTER -->
+{% load static %}
 <footer id="footer" class="section section-grey">
 	<!-- container -->
 	<div class="container">
@@ -10,7 +11,7 @@
 					<!-- footer logo -->
 					<div class="footer-logo">
 						<a class="logo" href="#">
-							<img src="./img/logo.png" alt="">
+							<img src="{% static 'home' %}/img/logo.png" alt="">
 						</a>
 					</div>
 					<!-- /footer logo -->
@@ -97,9 +98,9 @@
 <!-- /FOOTER -->
 
 <!-- jQuery Plugins -->
-<script src="js/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/slick.min.js"></script>
-<script src="js/nouislider.min.js"></script>
-<script src="js/jquery.zoom.min.js"></script>
-<script src="js/main.js"></script>
+<script src="{% static 'home/' %}js/jquery.min.js"></script>
+<script src="{% static 'home/' %}js/bootstrap.min.js"></script>
+<script src="{% static 'home/' %}js/slick.min.js"></script>
+<script src="{% static 'home/' %}js/nouislider.min.js"></script>
+<script src="{% static 'home/' %}js/jquery.zoom.min.js"></script>
+<script src="{% static 'home/' %}js/main.js"></script>
