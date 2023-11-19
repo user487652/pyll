@@ -22,7 +22,7 @@ def index(request):
                'chocolate': chocolate}
 
     # context = {'title': 'Страница главная', 'Header1': 'Заголовок1', 'value': value, 'numbers': l}
-    return render(request, 'main/HomePage.html', context=context)
+    return render(request, 'main/MainPage.html', context=context)
 
 
 def about(request):
@@ -34,6 +34,16 @@ def about(request):
         print(request.path)
 
     return render(request, 'main/About.html')
+
+def contacts(request):
+    if request.method == 'POST':
+        print('получили пост запрос')
+        print(request.POST)
+    else:
+        print('получили гет запрос')
+        print(request.path)
+
+    return render(request, 'main/Contacts.html')
 
 
 def allnews(request):

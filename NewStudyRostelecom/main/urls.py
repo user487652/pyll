@@ -19,10 +19,9 @@ from main import views
 
 urlpatterns = [
     path('', views.index, name='home'),
-    path('HomePage.html', views.index, name='home'),
+    path('MainPage.html', views.index, name='home'),
     path('About.html', views.about, name='about'),
     path('AllNews.html', views.allnews, name='allnews'),
-    path('product/<int:a>/details/<int:b>', views.get_demo),
-    path('News/<int:a>', views.get_demo),
-    # path('contacts', views.contact, name='contacts')
+    path('News/<int:a>', views.News, name='news'),
+    path('Contacts.html', views.contacts, name='allnews'),
 ]
