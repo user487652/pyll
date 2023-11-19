@@ -20,7 +20,7 @@ def index(request):
              'chocolate':chocolate}
 
     # context = {'title': 'Страница главная', 'Header1': 'Заголовок1', 'value': value, 'numbers': l}
-    return render(request, 'main/index.html', context=context)
+    return render(request, 'main/index_.html', context=context)
 
 def get_demo(request, a, b):
     return HttpResponse(f'Вы ввели: {a} и {b} \n Сумма:{a+b}')
