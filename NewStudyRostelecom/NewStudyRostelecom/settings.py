@@ -23,9 +23,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-gz2@o4hqt*fc_75zuc0v=pi+9g^pc2s^elaj1e#_61y#26#ez0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# 404 handler
 
-ALLOWED_HOSTS = []
+DEBUG = False
+ALLOWED_HOSTS = ["*"]
+
+# DEBUG = True
+#
+# ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -56,7 +61,7 @@ ROOT_URLCONF = 'NewStudyRostelecom.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR/'all_apps/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

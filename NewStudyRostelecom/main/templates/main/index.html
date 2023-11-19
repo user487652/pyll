@@ -3,37 +3,55 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>{{ title }}</title>
     <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
     <script src="https://kit.fontawesome.com/80a43b10b5.js" crossorigin="anonymous"></script>
 </head>
 <body>
-{% if value > 0 %}
-<h3> Переменная больше нуля</h3>
-{% else %}
-<h3> Переменная не больше нуля</h3>
-{% endif %}
-<li>
-    {% for n in numbers %}
-    <ul>{{ n|lower }}</ul>
+{% include 'main/sidebar.html' %}
+<form method="post">
+    {% csrf_token %}
+    <h3>Выберите цвет:</h3>
+    {% for color in colors %}
+    <input type="radio" id="{{ color }}" name="colors" value="{{ forloop.counter }}">
+    <label for="{{ color }}">{{ color }}</label><br>
     {% endfor %}
-</li>
-<h1>{{Header1}}</h1>
-<p>
-    value={{ value|add:"10" }}
-</p>
-<h3>Заголовок 3</h3>
-<h6>Заголовок 6</h6>
-<p>Параграф</p>
-<div>
-    <h2>Новость 1</h2>
-</div>
-<table border="1">
-    <th>Ячейка заголовка</th>
+    <br>
+    <input class="btn-primary" type="submit" value="Сохранить">
+</form>
+
+<form method="post">
+    {% csrf_token %}
+    <label> Введите название товара: </label>
+    <input type="text" name="title">
+    <br>
+    <label> Введите цену товара: </label>
+    <input type="text" name="price">
+    <br>
+    <label> Выберите кол-во товаров: </label>
+    <input type="number" name="qty">
+
+    <input class="btn-primary" type="submit" value="Создать товар">
+</form>
+
+<table width="500px;" border="1 px;">
     <tr>
-        <td>Ячейка 1</td>
+        <th>Товар</th>
+        <th>Цена</th>
+        <th>Кол-во</th>
+        <th>Итого</th>
+    </tr>
+    <tr>
+        <td>{{ water.title }}</td>
+        <td>{{ water.price }}</td>
+        <td>{{ water.quantity }}</td>
+        <td>{{ water.amount }}</td>
+    </tr>
+    <tr>
+        <td>{{ chocolate.title }}</td>
+        <td>{{ chocolate.price }}</td>
+        <td>{{ chocolate.quantity }}</td>
+        <td>{{ chocolate.amount }}</td>
     </tr>
 </table>
-
 </body>
 </html>
