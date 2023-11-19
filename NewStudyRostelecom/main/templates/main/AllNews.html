@@ -1,0 +1,29 @@
+{% extends 'main/SideBar.html' %}
+{% load static %}
+{% block content %}
+
+<h1 class="text-center">Все новости</h1>
+<br>
+<br>
+<br>
+<div class="text-center">
+    <table border="1px;">
+        <tr>
+            <th> Порядковый номер новости</th>
+            <th> Анонс</th>
+            <th> Дата</th>
+        </tr>
+        {% for n in newslist %}
+        <tr>
+            <td> <a href="{{ n.4 }}"> {{ n.0 }} </a></td>
+            <td> {{ n.2 }}</td>
+            <td> {{ n.3 }}</td>
+        </tr>
+        <br>
+        {% endfor %}
+    </table>
+
+</div>
+
+
+{% endblock content %}

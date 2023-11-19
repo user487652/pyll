@@ -26,5 +26,4 @@ handler404=main.views.custom_404
 urlpatterns = [
                   path('admin/', admin.site.urls),
                   path('', include('main.urls')),
-                  path('', include('main.urls')),
                   path('home/', include('home.urls'))] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
