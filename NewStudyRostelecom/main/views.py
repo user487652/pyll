@@ -126,7 +126,9 @@ def get_demo(request, a, b):
 
 
 def custom_404(request, exception):
-    return HttpResponse(f'абырвалг:{exception}')
+    # return HttpResponse(f'абырвалг:{exception}')
+    context={'exception':exception}
+    return render(request, 'main/404.html', context=context)
 
 #
 # def SideBar(request):

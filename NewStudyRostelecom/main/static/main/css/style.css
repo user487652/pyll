@@ -49,6 +49,7 @@ body {
 #SideBar {
     height:100vh;
     background-color: black;
+    display: block;
 }
 
 #fulltext {
