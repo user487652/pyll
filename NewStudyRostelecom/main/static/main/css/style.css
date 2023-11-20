@@ -9,4 +9,37 @@ h4.main_list {
 
 #SideBar {
     height: 100vh;
+    background-size: cover;
+}
+
+#user_link1 {
+    color: white;
+    text-decoration: none;
+    background-color: blue;
+    border-top: 1px solid #CCCCCC;
+    border-right: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+    border-left: 1px solid #CCCCCC;
+}
+
+#user_link0 {
+    color: white;
+    text-decoration: none;
+    background-color: blue;
+    border-top: 1px solid #CCCCCC;
+    border-right: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+    border-left: 1px solid #CCCCCC;
+}
+
+input {
+    display: block;
+    margin: 0 auto;
+    width: 200px;
+}
+
+.registration {
+    display: block;
+    margin: 0 auto;
+    width: 200px;
 }

@@ -45,6 +45,16 @@ def contacts(request):
 
     return render(request, 'main/Contacts.html')
 
+def registration(request):
+    if request.method == 'POST':
+        print('получили пост запрос')
+        print(request.POST)
+    else:
+        print('получили гет запрос')
+        print(request.path)
+
+    return render(request, 'main/Registration.html')
+
 
 def allnews(request):
     if request.method == 'POST':
