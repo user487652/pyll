@@ -6,10 +6,13 @@ h4.main_list {
     margin-left: 25%;
 }
 
+body {
+background-color: black;
+height: 100vh;
+}
 
-#SideBar {
-    height: 100vh;
-    background-size: cover;
+.Content {
+background-color: white;
 }
 
 #user_link1 {
