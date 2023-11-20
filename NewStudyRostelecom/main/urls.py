@@ -25,4 +25,5 @@ urlpatterns = [
     path('News/<int:a>', views.News, name='news'),
     path('Contacts.html', views.contacts, name='allnews'),
     path('Registration.html', views.registration, name='registration'),
+    path('Account.html', views.account, name='account'),
 ]
