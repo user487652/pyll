@@ -43,10 +43,17 @@ body {
 .account {
     display: block;
     margin: 0 auto;
-    width: 200px;
+    width: 500px;
 }
 
 #SideBar {
     height:100vh;
     background-color: black;
+}
+
+#fulltext {
+    display: block;
+    margin: 0 auto;
+    width: 500px;
+    height: 300px;
 }

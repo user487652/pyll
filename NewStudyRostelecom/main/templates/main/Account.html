@@ -10,22 +10,20 @@
 
     <br>
     <h3 class="text-center contacts">Создать новость</h3>
-    <form method="post">
+    <form method="post" class="text-center contacts">
         {% csrf_token %}
         <label for="zagolovok" class="account">Заголовок Новости</label>
-        <input type="text" id="zagolovok" value="">
+        <input type="text" class="account" id="zagolovok" value="">
         <br>
-        <label for="email" class="account">email</label>
-        <input type="email" id="email" value="@">
+        <label for="anounce" class="account">Анонс новости</label>
+        <input type="text" class="account" id="anounce" value="">
         <br>
-        <label for="Password" class="account">Password</label>
-        <input type="password" id="Password" value="">
-        <br>
-        <label for="Password Confirmation" class="account">Password Confirmation</label>
-        <input type="password" id="Password Confirmation" value="">
+        <label for="fulltext" class="account">Текст новости</label>
+        <textarea class="account" id="fulltext" rows="4" cols="50">
+        </textarea>
         <br>
         <br>
-        <input class="btn-primary" type="submit" value="Создать">
+        <input class="btn-primary account" type="submit" value="Создать">
     </form>
 </div>
 
