@@ -7,12 +7,11 @@ h4.main_list {
 }
 
 body {
-background-color: black;
-height: 100vh;
+    height: 100vh;
 }
 
 .Content {
-background-color: white;
+    background-color: white;
 }
 
 #user_link1 {
@@ -35,14 +34,19 @@ background-color: white;
     border-left: 1px solid #CCCCCC;
 }
 
-input {
+.registration {
     display: block;
     margin: 0 auto;
     width: 200px;
 }
 
-.registration {
+.account {
     display: block;
     margin: 0 auto;
     width: 200px;
+}
+
+#SideBar {
+    height:100vh;
+    background-color: black;
 }
