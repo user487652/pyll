@@ -36,33 +36,33 @@
             <div class="row">
                 <ul class="main_list">
                     <li style="color:#FFFFFF"><i class="fa-solid fa-house"></i><a
-                            href="http://127.0.0.1:8000/MainPage.html"
+                            href="{% url 'home' %}"
                             style="color:#FFFFFF">
                         Главная страница </a></li>
                     <br>
                     <li style="color:#FFFFFF"><i class="fa-solid fa-newspaper"></i><a
-                            href="http://127.0.0.1:8000/AllNews.html"
+                            href="{% url 'allnews' %}"
                             style="color:#FFFFFF">
                         Все новости </a></li>
                     <br>
                     <li style="color:#FFFFFF"><i class="fa-solid fa-people-group"></i><a
-                            href="http://127.0.0.1:8000/About.html"
+                            href="{% url 'about' %}"
                             style="color:#FFFFFF">
                         Про нас </a></li>
                     <br>
                     <li style="color:#FFFFFF"><i class="fa-solid fa-phone"></i><a
-                            href="http://127.0.0.1:8000/Contacts.html"
+                            href="{% url 'contacts' %}"
                             style="color:#FFFFFF">
                         Контакты </a></li>
                     <br>
                     <br>
                     <li style="color:#FFFFFF"><i class="fa-solid fa-door-open"></i><a id="user_link0"
-                                                                                      href="http://127.0.0.1:8000/Account.html"
+                                                                                      href="{% url 'account' %}"
                     >
                         Войти </a></li>
                     <br>
                     <li style="color:#FFFFFF"><i class="fa-solid fa-address-card"></i><a id="user_link1"
-                                                                                         href="http://127.0.0.1:8000/Registration.html"
+                                                                                         href="{% url 'registration' %}"
                     >
                         Регистрация </a></li>
                     <!--                    <form method="post">-->

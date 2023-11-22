@@ -23,7 +23,7 @@ urlpatterns = [
     path('About.html', views.about, name='about'),
     path('AllNews.html', views.allnews, name='allnews'),
     path('News/<int:a>', views.News, name='news'),
-    path('Contacts.html', views.contacts, name='allnews'),
+    path('Contacts.html', views.contacts, name='contacts'),
     path('Registration.html', views.registration, name='registration'),
     path('Account.html', views.account, name='account'),
 ]
