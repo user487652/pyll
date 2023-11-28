@@ -1,0 +1,31 @@
+{% extends 'main/SideBar.html' %}
+{% load static %}
+
+{% block content %}
+
+<h1 class="text-center">Все новости</h1>
+<br>
+<br>
+<br>
+<div class="table text-center">
+    <table border="1px;">
+        <tr>
+            <th> Порядковый номер новости</th>
+            <th> Анонс</th>
+            <th> Дата</th>
+            <th> Автор</th>
+        </tr>
+        {% for n in news %}
+        <tr>
+            <td> <a href="{{n.get_absolute_url}}"> {{ n.title }} </a></td>
+            <td> {{ n.anouncement }}</td>
+            <td> {{ n.date }}</td>
+            <td> {{ n.author.username }}</td>
+        </tr>
+        <br>
+        {% endfor %}
+    </table>
+
+</div>
+
+{% endblock content %}
