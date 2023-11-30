@@ -23,13 +23,21 @@ class Article(models.Model):
     text = models.TextField('Текст новости')
     date = models.DateTimeField('Дата публикации', auto_created=True)
     category = models.CharField(choices=categories, max_length=20, verbose_name='Категории')
-    tag=models.ManyToManyField(to=Tag)
+    tags=models.ManyToManyField(to=Tag, blank=True)
 
     def __str__(self):
         return f'Новость: {self.title} от {self.date}'
 
     def get_absolute_url(self):
         return f'/news/{self.id}'
+
+    # def tag_list(self):
+    #     s=''
+    #     for t in self.tags.all():
+    #         s+=t.title+' '
+    #     return s
+
+
 
     class Meta:
         ordering=['title','date']
