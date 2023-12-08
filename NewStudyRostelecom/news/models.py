@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+import datetime
 
 class Tag(models.Model):
     title = models.CharField(max_length=80)
@@ -21,7 +22,7 @@ class Article(models.Model):
     title = models.CharField('Название', max_length=50, default='')
     anouncement = models.TextField('Аннотация', max_length=250)
     text = models.TextField('Текст новости')
-    date = models.DateTimeField('Дата публикации', auto_created=True)
+    date = models.DateTimeField('Дата публикации', auto_created=True,default=datetime.datetime.now())
     category = models.CharField(choices=categories, max_length=20, verbose_name='Категории')
     tags=models.ManyToManyField(to=Tag, blank=True)
 
