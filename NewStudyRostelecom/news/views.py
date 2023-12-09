@@ -2,6 +2,8 @@ from django.shortcuts import render, HttpResponse
 from .models import *
 import pandas as pd
 import random
+from .forms import *
+
 
 # Create your views here.
 
@@ -11,8 +13,8 @@ def news_list(request):
     # print(news)
     # news = Article.objects.filter(author=request.user.id)
     news = Article.objects.all()
-    tag=Tag.objects.filter(title='Crypto')[0]
-    tagged_news=Article.objects.filter(tags=tag)
+    tag = Tag.objects.filter(title='Crypto')[0]
+    tagged_news = Article.objects.filter(tags=tag)
     print(tagged_news)
     # tag=Tag.objects.filter(title='IT').first()
 
@@ -20,26 +22,42 @@ def news_list(request):
     return render(request, 'news/news_list.html', context)
 
 
-def news_detail(request,id):
+def news_detail(request, id):
     news = Article.objects.get(id=id)
     context = {'news': news}
     return render(request, 'news/news_detail.html', context)
 
+
 def news_load(request):
-    cntr=Article.objects.count()+1
-    df=pd.read_excel(r'C:/Users/Pavel/Downloads/news_gpt.xlsx', dtype='string')
-    id_list=User.objects.all().values('id')
-    lst=[]
+    cntr = Article.objects.count() + 1
+    df = pd.read_excel(r'C:/Users/Pavel/Downloads/news_gpt.xlsx', dtype='string')
+    id_list = User.objects.all().values('id')
+    lst = []
     for lst_ in id_list:
         lst.append(lst_.get('id'))
-    for r in range(0,df.shape[0]):
-        id_=random.randint(0,len(lst)-1)
-        author=User.objects.get(id=lst[id_])
-        title='Новость ' + str(cntr)
-        anouncement=df.loc[r, 'anounce']
-        text=df.loc[r, 'text']
-        new_article=Article(author=author,title=title,anouncement=anouncement,text=text)
+    for r in range(0, df.shape[0]):
+        id_ = random.randint(0, len(lst) - 1)
+        author = User.objects.get(id=lst[id_])
+        title = 'Новость ' + str(cntr)
+        anouncement = df.loc[r, 'anounce']
+        text = df.loc[r, 'text']
+        new_article = Article(author=author, title=title, anouncement=anouncement, text=text)
         new_article.save()
-        cntr+=1
+        cntr += 1
     return HttpResponse('Новости добавлены')
 
+
+def create_article(request):
+    if request.method == 'POST':
+        form = ArticleForm(request.POST)
+        if form.is_valid():
+            current_user = request.user
+            if current_user.id != None:
+                new_article=form.save(commit=False)
+                new_article.author=current_user
+                new_article.save()
+    else:
+        form = ArticleForm()
+
+    context = {'form': form}
+    return render(request, 'news/create_article.html', context)

@@ -23,4 +23,4 @@ def contact_page(request):
         form.name = 'Любимый клиент'
 
     context = {'form': form}
-    return render(request, 'users/contact_page.html', context)
+    return render(request, 'users/create_article.html', context)
