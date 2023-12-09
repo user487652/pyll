@@ -3,10 +3,6 @@
 
 {% block content %}
 
-<!--<br>-->
-<!--<br>-->
-<!--<br>-->
-
 <h1 class="text-center">Все новости</h1>
 <br>
 <div class="text-center">
@@ -30,28 +26,24 @@
                     </option>
                     {% endfor %}
                 </select>
+                <br>
+                <br>
                 <input type="submit" class="btn btn-success" value="Применить">
             </div>
         </form>
     </label>
 </div>
 <br>
-<table border="1px;">
-    <tr>
-        <th> Порядковый номер новости</th>
-        <th> Анонс</th>
-        <th> Дата</th>
-        <th> Автор</th>
-    </tr>
-    {% for n in news %}
-    <tr>
-        <td><a href="{{n.get_absolute_url}}"> {{ n.title }} </a></td>
-        <td> {{ n.anouncement }}</td>
-        <td> {{ n.date }}</td>
-        <td> {{ n.author.username }}</td>
-    </tr>
+{% for n in news %}
+<div>
+    <p><a href="{{n.get_absolute_url}}">Название новости {{ n.title }} </a></p>
+    <p> Анонс {{ n.anouncement }}</p>
+    <p> Дата {{ n.date }}</p>
+    <p> Автор {{ n.author.username }}</p>
     <br>
-    {% endfor %}
-</table>
+</div>
+
+{% endfor %}
+
 
 {% endblock content %}
