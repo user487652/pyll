@@ -14,3 +14,4 @@ class ContactForm(forms.Form):
     # demo = forms.BooleanField(required = False, help_text='Текст-подсказка',
     #                           label='Вам нравится?',
     #                           initial=True)
+

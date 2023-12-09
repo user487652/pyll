@@ -26,7 +26,7 @@ def news_detail(request,id):
     return render(request, 'news/news_detail.html', context)
 
 def news_load(request):
-    cntr=4
+    cntr=Article.objects.count()+1
     df=pd.read_excel(r'C:/Users/Pavel/Downloads/news_gpt.xlsx', dtype='string')
     id_list=User.objects.all().values('id')
     lst=[]
