@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 import datetime
+from django.utils.safestring import mark_safe
 
 class Tag(models.Model):
     title = models.CharField(max_length=80)
@@ -44,5 +45,20 @@ class Article(models.Model):
         ordering=['title','date']
         verbose_name = 'Новость'
         verbose_name_plural = 'Новости'
+
+class Image(models.Model):
+    article=models.ForeignKey(Article, on_delete=models.CASCADE)
+    title=models.CharField(max_length=50, blank=True)
+    image=models.ImageField(upload_to='article_images/')
+
+    def __str__(self):
+        return self.title
+
+
+    def image_tag(self):
+        if self.image is not None:
+            return mark_safe(f'<img src="{self.image.url}" height="50px" width="auto"/>')
+        else:
+            return '(no image)'
 
 

@@ -14,3 +14,8 @@ class TagAdmin(admin.ModelAdmin):
     list_filter = ['title','status']
 
 admin.site.register(Tag,TagAdmin)
+
+class ImageAdmin(admin.ModelAdmin):
+    list_display = ['title','article','image_tag']
+
+admin.site.register(Image,ImageAdmin)
