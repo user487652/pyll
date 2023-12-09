@@ -55,6 +55,8 @@ body {
     height:100vh;
     background-color: black;
     display: block;
+    position: sticky;
+    top: 0;
 }
 
 #Content {
