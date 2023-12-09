@@ -1,5 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse
 from .models import *
+import pandas as pd
+import random
 
 # Create your views here.
 
@@ -23,16 +25,21 @@ def news_detail(request,id):
     context = {'news': news}
     return render(request, 'news/news_detail.html', context)
 
-# def news_load(request):
-#     cntr=4
-#     df=pd.read_excel(r'C:/Users/Pavel/Downloads/news_gpt.xlsx', dtype='string')
-#     for r in range(0,df.shape[0]):
-#         author=User.objects.get(id=request.user.id)
-#         title='Новость ' + str(cntr)
-#         anouncement=df.loc[r, 'anounce']
-#         text=df.loc[r, 'text']
-#         new_article=Article(author=author,title=title,anouncement=anouncement,text=text)
-#         new_article.save()
-#         cntr+=1
-#     print('Новости добавлены')
+def news_load(request):
+    cntr=4
+    df=pd.read_excel(r'C:/Users/Pavel/Downloads/news_gpt.xlsx', dtype='string')
+    id_list=User.objects.all().values('id')
+    lst=[]
+    for lst_ in id_list:
+        lst.append(lst_.get('id'))
+    for r in range(0,df.shape[0]):
+        id_=random.randint(0,len(lst)-1)
+        author=User.objects.get(id=lst[id_])
+        title='Новость ' + str(cntr)
+        anouncement=df.loc[r, 'anounce']
+        text=df.loc[r, 'text']
+        new_article=Article(author=author,title=title,anouncement=anouncement,text=text)
+        new_article.save()
+        cntr+=1
+    return HttpResponse('Новости добавлены')
 

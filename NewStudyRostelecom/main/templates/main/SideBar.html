@@ -56,15 +56,18 @@
                         Контакты </a></li>
                     <br>
                     <br>
-                    <li style="color:#FFFFFF"><i class="fa-solid fa-door-open"></i><a id="user_link0"
-                                                                                      href="{% url 'account' %}"
+                    <li style="color:#FFFFFF" class="rounded border"><i class="fa-solid fa-door-open"></i><a
+                            href="{% url 'account' %}"
+                            style="color:#FFFFFF"
                     >
                         Войти </a></li>
                     <br>
-                    <li style="color:#FFFFFF"><i class="fa-solid fa-address-card"></i><a id="user_link1"
-                                                                                         href="{% url 'registration' %}"
+                    <li style="color:#FFFFFF" class="rounded border"><i class="fa-solid fa-address-card"></i><a
+                            href="{% url 'registration' %}"
+                            style="color:#FFFFFF"
                     >
                         Регистрация </a></li>
+
                     <!--                    <form method="post">-->
                     <!--                        {% csrf_token %}-->
                     <!--                        <input class="btn-primary" type="submit" value="Регистрация">-->
@@ -77,7 +80,7 @@
             <br>
             <br>
         </div>
-        <div class="col-lg-9 col-md-8 col-sm-8 Content">
+        <div class="col-lg-9 col-md-8 col-sm-8" id="Content">
             {% block content %}
             {% endblock content %}
         </div>
