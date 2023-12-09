@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, redirect
 from .models import *
 import pandas as pd
 import random
@@ -7,18 +7,40 @@ from .forms import *
 
 # Create your views here.
 
-def news_list(request):
-    # news = Article.objects.filter(author=request.user.id)
-    # news = Article.objects.get(title='Новость 1')
-    # print(news)
-    # news = Article.objects.filter(author=request.user.id)
-    news = Article.objects.all()
-    tag = Tag.objects.filter(title='Crypto')[0]
-    tagged_news = Article.objects.filter(tags=tag)
-    print(tagged_news)
-    # tag=Tag.objects.filter(title='IT').first()
+# def news_list(request):
+#     # news = Article.objects.filter(author=request.user.id)
+#     # news = Article.objects.get(title='Новость 1')
+#     # print(news)
+#     # news = Article.objects.filter(author=request.user.id)
+#     news = Article.objects.all()
+#     tag = Tag.objects.filter(title='Crypto')[0]
+#     tagged_news = Article.objects.filter(tags=tag)
+#     print(tagged_news)
+#     # tag=Tag.objects.filter(title='IT').first()
+#
+#     context = {'news': news}
+#     return render(request, 'news/news_list.html', context)
 
-    context = {'news': news}
+def news_list(request):
+    categories = Article.categories  # создали перечень категорий
+    author_list = User.objects.all()  # создали перечень авторов
+    if request.method == "POST":
+        selected_author = int(request.POST.get('author_filter'))
+        selected_category = int(request.POST.get('category_filter'))
+        if selected_author == 0:  # выбраны все авторы
+            news = Article.objects.all()
+        else:
+            news = Article.objects.filter(author=selected_author)
+        if selected_category != 0:  # фильтруем найденные по авторам результаты по категориям
+            news = news.filter(category__icontains=categories[selected_category - 1][0])
+    else:  # если страница открывется впервые
+        selected_author = 0
+        selected_category = 0
+        news = Article.objects.all()
+
+    context = {'news': news, 'author_list': author_list, 'selected_author': selected_author,
+               'categories': categories, 'selected_category': selected_category}
+
     return render(request, 'news/news_list.html', context)
 
 
@@ -53,9 +75,11 @@ def create_article(request):
         if form.is_valid():
             current_user = request.user
             if current_user.id != None:
-                new_article=form.save(commit=False)
-                new_article.author=current_user
+                new_article = form.save(commit=False)
+                new_article.author = current_user
                 new_article.save()
+                form.save_m2m()
+                return redirect('news_list')
     else:
         form = ArticleForm()
 

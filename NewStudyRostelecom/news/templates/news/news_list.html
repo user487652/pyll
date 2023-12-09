@@ -6,26 +6,52 @@
 <!--<br>-->
 <!--<br>-->
 <!--<br>-->
-<div class="content-center">
-    <h1 class="text-center">Все новости</h1>
-    <table border="1px;">
-        <tr>
-            <th> Порядковый номер новости</th>
-            <th> Анонс</th>
-            <th> Дата</th>
-            <th> Автор</th>
-        </tr>
-        {% for n in news %}
-        <tr>
-            <td> <a href="{{n.get_absolute_url}}"> {{ n.title }} </a></td>
-            <td> {{ n.anouncement }}</td>
-            <td> {{ n.date }}</td>
-            <td> {{ n.author.username }}</td>
-        </tr>
-        <br>
-        {% endfor %}
-    </table>
 
+<h1 class="text-center">Все новости</h1>
+<br>
+<div class="text-center">
+    <label><h3> Фильтры: (Всего :{{ news|length }} результатов) </h3>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group col-11">
+                <select class="form-select" name="author_filter">
+                    <option value="0">Все авторы</option>
+                    {% for author in author_list %}
+                    <option value="{{ author.id }}" {% if selected_author == author.id %} selected {% endif %}>
+                        {{ author.username }}
+                    </option>
+                    {% endfor %}
+                </select>
+                <select class="form-select" name="category_filter">
+                    <option value="0">Все категории</option>
+                    {% for c in categories %}
+                    <option value="{{ forloop.counter }}" {% if selected_category == forloop.counter %} selected {% endif %}>
+                        {{ c.1 }}
+                    </option>
+                    {% endfor %}
+                </select>
+                <input type="submit" class="btn btn-success" value="Применить">
+            </div>
+        </form>
+    </label>
 </div>
+<br>
+<table border="1px;">
+    <tr>
+        <th> Порядковый номер новости</th>
+        <th> Анонс</th>
+        <th> Дата</th>
+        <th> Автор</th>
+    </tr>
+    {% for n in news %}
+    <tr>
+        <td><a href="{{n.get_absolute_url}}"> {{ n.title }} </a></td>
+        <td> {{ n.anouncement }}</td>
+        <td> {{ n.date }}</td>
+        <td> {{ n.author.username }}</td>
+    </tr>
+    <br>
+    {% endfor %}
+</table>
 
 {% endblock content %}
