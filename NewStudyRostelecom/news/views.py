@@ -68,6 +68,5 @@ def create_article(request):
                 return redirect('news_list')
     else:
         form = ArticleForm()
-
     context = {'form': form}
     return render(request, 'news/create_article.html', context)

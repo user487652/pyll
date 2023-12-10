@@ -33,6 +33,13 @@ class Article(models.Model):
     def get_absolute_url(self):
         return f'/news/{self.id}'
 
+    def image_tag(self):
+        image=Image.objects.filter(article=self)
+        if image:
+            return mark_safe(f'<img src="{image[0].image.url}" height="50px" width="auto"/>')
+        else:
+            return '(no image)'
+
     # def tag_list(self):
     #     s=''
     #     for t in self.tags.all():
@@ -56,9 +63,10 @@ class Image(models.Model):
 
 
     def image_tag(self):
-        if self.image is not None:
+        if self.image:
             return mark_safe(f'<img src="{self.image.url}" height="50px" width="auto"/>')
         else:
             return '(no image)'
+
 
 
