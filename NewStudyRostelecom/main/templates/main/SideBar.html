@@ -34,6 +34,7 @@
                 <br>
             </div>
             <div class="row">
+                {% if request.user.is_anonymous %}
                 <ul class="main_list">
                     <li style="color:#FFFFFF"><i class="fa-solid fa-house"></i><a
                             href="{% url 'home' %}"
@@ -56,6 +57,7 @@
                         Контакты </a></li>
                     <br>
                     <br>
+                    <hr style="background-color: white">
                     <li style="color:#FFFFFF" class="rounded border"><i class="fa-solid fa-door-open"></i><a
                             href="{% url 'account' %}"
                             style="color:#FFFFFF"
@@ -67,18 +69,49 @@
                             style="color:#FFFFFF"
                     >
                         Регистрация </a></li>
-
-                    <!--                    <form method="post">-->
-                    <!--                        {% csrf_token %}-->
-                    <!--                        <input class="btn-primary" type="submit" value="Регистрация">-->
-                    <!--                    </form>-->
+                    <br>
                 </ul>
+                {% else %}
+                <ul class="main_list">
+                    <li style="color:#FFFFFF"><i class="fa-solid fa-house"></i><a
+                            href="{% url 'home' %}"
+                            style="color:#FFFFFF">
+                        Главная страница </a></li>
+                    <br>
+                    <li style="color:#FFFFFF"><i class="fa-solid fa-newspaper"></i><a
+                            href="{% url 'news_list' %}"
+                            style="color:#FFFFFF">
+                        Все новости </a></li>
+                    <br>
+                    <li style="color:#FFFFFF"><i class="fa-solid fa-people-group"></i><a
+                            href="{% url 'about' %}"
+                            style="color:#FFFFFF">
+                        Про нас </a></li>
+                    <br>
+                    <li style="color:#FFFFFF"><i class="fa-solid fa-phone"></i><a
+                            href="{% url 'contacts' %}"
+                            style="color:#FFFFFF">
+                        Контакты </a></li>
+                    <br>
+                    <br>
+                    <br>
+                    <hr style="background-color: white">
+                    <p style="color:#FFFFFF">
+                        Добро пожаловать {{ request.user }} !
+                    </p>
+                </ul>
+                {% endif %}
             </div>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
+            <p style="color:#FFFFFF">
+                {% if messages %}
+                {% for message in messages %}
+                <br>
+                    <div style="color:#FFFFFF" class="alert-alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            </p>
         </div>
         <div class="col-lg-9 col-md-8 col-sm-8" id="Content">
             {% block content %}

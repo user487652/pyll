@@ -1,10 +1,22 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, redirect
 from .forms import *
 from .models import *
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import authenticate
+from django.contrib import messages
 
 def registration(request):
-    form=UserCreationForm()
+    if request.method=='POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username=form.cleaned_data.get('username')
+            password=form.cleaned_data.get('password')
+            authenticate(username=username,password=password)
+            messages.success(request, f'{username} был зарегистрирован!')
+            return redirect('home')
+    else:
+        form=UserCreationForm()
     context={'form':form}
     return render(request, 'users/registration.html', context)
 

@@ -5,9 +5,11 @@ from .models import Product
 
 def index(request):
     if request.method == 'POST':
+        print(request.user)
         print('получили пост запрос')
         print(request.POST)
     else:
+        print(request.user)
         print('получили гет запрос')
         print(request.path)
         print(request.user.id)
