@@ -5,13 +5,13 @@
 {% block content %}
 
 
-<div class="text-center">
-    <h2>Обратная связь</h2>
+<div class="text-center" id="reg_form">
+    <h2>Регистрация</h2>
     <br>
     <form method="post">
         {% csrf_token %}
         {{ form|crispy }}
-        <input type="submit" value="Отправить">
+        <input type="submit" class="btn btn-outline-success" value="Зарегистрироваться">
     </form>
 </div>
 
