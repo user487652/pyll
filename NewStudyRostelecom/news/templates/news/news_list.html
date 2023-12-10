@@ -36,7 +36,7 @@
 <br>
 {% for n in news %}
 <div>
-    <p><a href="{{n.get_absolute_url}}">Название новости {{ n.title }} </a></p>
+    <p><a href="{{n.get_absolute_url}}">{{ n.title }} </a></p>
     <p> Анонс {{ n.anouncement }}</p>
     <p> Дата {{ n.date }}</p>
     <p> Автор {{ n.author.username }}</p>

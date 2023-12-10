@@ -1,6 +1,12 @@
 from django.shortcuts import render, HttpResponse
 from .forms import *
 from .models import *
+from django.contrib.auth.forms import UserCreationForm
+
+def registration(request):
+    form=UserCreationForm()
+    context={'form':form}
+    return render(request, 'users/registration.html', context)
 
 
 def index(request):
@@ -23,4 +29,4 @@ def contact_page(request):
         form.name = 'Любимый клиент'
 
     context = {'form': form}
-    return render(request, 'users/create_article.html', context)
+    return render(request, 'users/contact_page.html', context)

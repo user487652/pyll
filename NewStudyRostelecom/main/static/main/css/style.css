@@ -59,8 +59,10 @@ body {
     top: 0;
 }
 
-#Content {
-
+#carouselExampleControls {
+    width: 400px;
+    height: auto;
+    margin: auto;
 }
 
 #fulltext {
