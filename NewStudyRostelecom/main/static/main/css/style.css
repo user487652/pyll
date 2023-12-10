@@ -87,3 +87,8 @@ body {
     width: 55%;
     margin: auto;
 }
+
+#toprofile {
+    color: blue;
+    text-decoration: underline #FFFFFF;
+}
