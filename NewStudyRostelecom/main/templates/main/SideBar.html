@@ -57,9 +57,10 @@
                         Контакты </a></li>
                     <br>
                     <br>
+                    <br>
                     <hr style="background-color: white">
                     <li style="color:#FFFFFF" class="rounded border"><i class="fa-solid fa-door-open"></i><a
-                            href="{% url 'account' %}"
+                            href="{% url 'login' %}"
                             style="color:#FFFFFF"
                     >
                         Войти </a></li>
@@ -69,6 +70,7 @@
                             style="color:#FFFFFF"
                     >
                         Регистрация </a></li>
+                    <hr style="background-color: white">
                     <br>
                 </ul>
                 {% else %}
@@ -96,20 +98,35 @@
                     <br>
                     <br>
                     <hr style="background-color: white">
-                    <p style="color:#FFFFFF">
-                        Добро пожаловать {{ request.user }} !
-                    </p>
+                    <li style="color:#FFFFFF" class="rounded border"><i class="fa-solid fa-door-open"></i><a
+                            href="{% url 'logout' %}"
+                            style="color:#FFFFFF"
+                    >
+                        Выход </a></li>
+                    <br>
+                    <li style="color:#FFFFFF" class="rounded border"><i class="fa-solid fa-address-card"></i><a
+                            href="{% url 'create_article' %}"
+                            style="color:#FFFFFF"
+                    >
+                        Создать статью </a></li>
+                    <hr style="background-color: white">
+                    <br>
+                    <li style="color:#FFFFFF">
+                        Добро пожаловать,
+                        <p>{{ request.user }} !</p>
+                    </li>
                 </ul>
+
                 {% endif %}
             </div>
             <p style="color:#FFFFFF">
                 {% if messages %}
                 {% for message in messages %}
                 <br>
-                    <div style="color:#FFFFFF" class="alert-alert-{{ message.tags }}">
-                        {{ message }}
-                    </div>
-                {% endfor %}
+            <div style="color:#FFFFFF" class="alert-alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+            {% endfor %}
             {% endif %}
             </p>
         </div>

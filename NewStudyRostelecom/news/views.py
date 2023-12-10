@@ -3,7 +3,8 @@ from .models import *
 import pandas as pd
 import random
 from .forms import *
-
+from django.contrib.auth.decorators import login_required
+from django.conf import settings
 
 # Create your views here.
 
@@ -54,7 +55,7 @@ def news_load(request):
         cntr += 1
     return HttpResponse('Новости добавлены')
 
-
+@login_required(login_url=settings.LOGIN_URL)
 def create_article(request):
     if request.method == 'POST':
         form = ArticleForm(request.POST, request.FILES)

@@ -4,12 +4,15 @@ from .models import *
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate
 from django.contrib import messages
+from django.contrib.auth.models import Group
 
 def registration(request):
     if request.method=='POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
+            user=form.save()
+            group=Group.objects.get(name='Authors')
+            user.groups.add(group)
             username=form.cleaned_data.get('username')
             password=form.cleaned_data.get('password1')
             authenticate(username=username,password=password)
