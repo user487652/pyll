@@ -61,10 +61,13 @@ def create_article(request):
         if form.is_valid():
             current_user = request.user
             if current_user.id != None:
-                new_article = form.save(commit=False)
+                new_article = Article()
                 new_article.author = current_user
+                new_article.title=form.cleaned_data.get('title')
+                new_article.anouncement = form.cleaned_data.get('anouncement')
+                new_article.text = form.cleaned_data.get('text')
                 new_article.save()
-                form.save_m2m()
+                new_article.tags.set(form.cleaned_data.get('tags'))
                 return redirect('news_list')
     else:
         form = ArticleForm()

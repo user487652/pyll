@@ -9,6 +9,6 @@ class ArticleForm(ModelForm):
         fields=['title','anouncement','text','date','tags']
         widgets={
             'anouncement':Textarea(attrs={'cols':80,'rows':2}),
-            'text':Textarea(attrs={'cols':80,'rows':2}),
+            'text':Textarea(attrs={'cols':80,'rows':3}),
             'tags':CheckboxSelectMultiple(),
         }
