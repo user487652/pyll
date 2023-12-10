@@ -83,4 +83,7 @@ body {
     margin: auto;
 }
 
-
+#create_form {
+    width: 55%;
+    margin: auto;
+}

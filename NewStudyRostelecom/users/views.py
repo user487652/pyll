@@ -31,6 +31,9 @@ def index(request):
     # print(user_acc.birthday,user_acc.gender )
     return HttpResponse('Приложение Users')
 
+def profile(request):
+    return render(request, 'users/profile.html')
+
 
 def contact_page(request):
     if request.method == "POST":

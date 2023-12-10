@@ -113,7 +113,8 @@
                     <br>
                     <li style="color:#FFFFFF">
                         Добро пожаловать,
-                        <p>{{ request.user }} !</p>
+                        <p><a href="{% url 'profile' %}" style="color:#FFFFFF">
+                            {{ request.user }} </a>!</p>
                     </li>
                 </ul>
 
