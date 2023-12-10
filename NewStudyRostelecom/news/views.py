@@ -32,9 +32,9 @@ def news_list(request):
 
 def news_detail(request, id):
     news = Article.objects.get(id=id)
-    context = {'news': news}
+    images=Image.objects.filter(article_id=id)
+    context = {'news': news,'images': images}
     return render(request, 'news/news_detail.html', context)
-
 
 def news_load(request):
     cntr = Article.objects.count() + 1
@@ -57,7 +57,7 @@ def news_load(request):
 
 def create_article(request):
     if request.method == 'POST':
-        form = ArticleForm(request.POST)
+        form = ArticleForm(request.POST, request.FILES)
         if form.is_valid():
             current_user = request.user
             if current_user.id != None:
@@ -68,6 +68,8 @@ def create_article(request):
                 new_article.text = form.cleaned_data.get('text')
                 new_article.save()
                 new_article.tags.set(form.cleaned_data.get('tags'))
+                for img in request.FILES.getlist('image_field'):
+                    Image.objects.create(article=new_article, image=img, title=img.name)
                 return redirect('news_list')
     else:
         form = ArticleForm()
