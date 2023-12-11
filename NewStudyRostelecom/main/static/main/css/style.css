@@ -88,7 +88,7 @@ body {
     margin: auto;
 }
 
-#toprofile {
+.podcherk {
     color: blue;
-    text-decoration: underline #FFFFFF;
+    text-decoration: underline blue;
 }
