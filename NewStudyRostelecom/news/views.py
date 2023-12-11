@@ -6,7 +6,8 @@ import json
 from .forms import *
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
-
+from django.db.models import Avg,Count,Sum
+from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -19,13 +20,13 @@ def news_list(request):
         if selected_author == 0:  # выбраны все авторы
             news = Article.objects.all()
         else:
-            news = Article.objects.filter(author=selected_author)
+            news = Article.objects.filter(author=selected_author).order_by('date')
         if selected_category != 0:  # фильтруем найденные по авторам результаты по категориям
             news = news.filter(category__icontains=categories[selected_category - 1][0])
     else:  # если страница открывется впервые
         selected_author = 0
         selected_category = 0
-        news = Article.objects.all()
+        news = Article.objects.all().order_by('date')
 
     context = {'news': news, 'author_list': author_list, 'selected_author': selected_author,
                'categories': categories, 'selected_category': selected_category}
@@ -86,7 +87,7 @@ def news_search(request):
     news={}
     if request.method == 'POST':
         print(request.POST)
-        news=Article.objects.filter(title=request.POST.get('search_input'))
+        news=Article.objects.filter(title=request.POST.get('search_input')).order_by('date')
     context = {'news': news}
     return render(request, 'news/news_search.html', context)
 

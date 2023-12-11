@@ -3,9 +3,10 @@ from django.contrib.auth.models import User
 import datetime
 from django.utils.safestring import mark_safe
 
+
 class Tag(models.Model):
     title = models.CharField(max_length=80)
-    status=models.BooleanField(default=True)
+    status = models.BooleanField(default=True)
 
     def __str__(self):
         return self.title
@@ -15,6 +16,7 @@ class Tag(models.Model):
         verbose_name = 'Тэг'
         verbose_name_plural = 'Тэги'
 
+
 class Article(models.Model):
     categories = (('E', 'Economics'),
                   ('S', 'Science'),
@@ -23,9 +25,9 @@ class Article(models.Model):
     title = models.CharField('Название', max_length=50, default='')
     anouncement = models.TextField('Аннотация', max_length=250)
     text = models.TextField('Текст новости')
-    date = models.DateTimeField('Дата публикации', auto_created=True,default=datetime.datetime.now())
+    date = models.DateTimeField('Дата публикации', auto_created=True, default=datetime.datetime.now())
     category = models.CharField(choices=categories, max_length=20, verbose_name='Категории')
-    tags=models.ManyToManyField(to=Tag, blank=True)
+    tags = models.ManyToManyField(to=Tag, blank=True)
 
     def __str__(self):
         return f'Новость: {self.title} от {self.date}'
@@ -34,7 +36,7 @@ class Article(models.Model):
         return f'/news/{self.id}'
 
     def image_tag(self):
-        image=Image.objects.filter(article=self)
+        image = Image.objects.filter(article=self)
         if image:
             return mark_safe(f'<img src="{image[0].image.url}" height="50px" width="auto"/>')
         else:
@@ -46,27 +48,22 @@ class Article(models.Model):
     #         s+=t.title+' '
     #     return s
 
-
-
     class Meta:
-        ordering=['title','date']
+        ordering = ['title', 'date']
         verbose_name = 'Новость'
         verbose_name_plural = 'Новости'
 
+
 class Image(models.Model):
-    article=models.ForeignKey(Article, on_delete=models.CASCADE)
-    title=models.CharField(max_length=50, blank=True)
-    image=models.ImageField(upload_to='article_images/')
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    title = models.CharField(max_length=50, blank=True)
+    image = models.ImageField(upload_to='article_images/')
 
     def __str__(self):
         return self.title
-
 
     def image_tag(self):
         if self.image:
             return mark_safe(f'<img src="{self.image.url}" height="50px" width="auto"/>')
         else:
             return '(no image)'
-
-
-
