@@ -18,7 +18,7 @@ def news_list(request):
         selected_author = int(request.POST.get('author_filter'))
         selected_category = int(request.POST.get('category_filter'))
         if selected_author == 0:  # выбраны все авторы
-            news = Article.objects.all()
+            news = Article.objects.all().order_by('date')
         else:
             news = Article.objects.filter(author=selected_author).order_by('date')
         if selected_category != 0:  # фильтруем найденные по авторам результаты по категориям
