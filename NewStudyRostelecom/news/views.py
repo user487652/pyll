@@ -84,9 +84,9 @@ def create_article(request):
 
 def news_search(request):
     news={}
-    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-        q = request.GET.get('term','')
-        news = Article.objects.filter(title__icontains=q)
+    if request.method == 'POST':
+        print(request.POST)
+        news=Article.objects.filter(title=request.POST.get('search_input'))
     context = {'news': news}
     return render(request, 'news/news_search.html', context)
 
@@ -102,4 +102,4 @@ def search_auto(request):
     else:
         data='fail'
     mimetype='application/json'
-    return HttpResponse()
+    return HttpResponse(data,mimetype)
