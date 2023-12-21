@@ -42,6 +42,9 @@ class Article(models.Model):
         else:
             return '(no image)'
 
+    def get_views(self):
+        return self.views.count()
+
     # def tag_list(self):
     #     s=''
     #     for t in self.tags.all():
@@ -80,3 +83,5 @@ class ViewCount(models.Model):
 
     def __str__(self):
         return self.article.title
+
+

@@ -56,4 +56,6 @@ class ImageAdmin(admin.ModelAdmin):
 
 admin.site.register(Image,ImageAdmin)
 
-
+@admin.register(ViewCount)
+class ViewCountAdmin(admin.ModelAdmin):
+    list_display = ['article','ip_address','view_date']

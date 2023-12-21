@@ -33,10 +33,16 @@ def news_list(request):
 
     return render(request, 'news/news_list.html', context)
 
-
 def news_detail(request, id):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwraded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    ip_address = ip
     news = Article.objects.get(id=id)
     images = Image.objects.filter(article_id=id)
+    ViewCount.objects.get_or_create(article=news, ip_address=ip_address)
     context = {'news': news, 'images': images}
     return render(request, 'news/news_detail.html', context)
 
