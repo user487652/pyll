@@ -11,6 +11,15 @@
     <form method="post">
         {% csrf_token %}
         {{ form|crispy }}
+        <h5>Тип аккаунта:</h5>
+        <div>
+            <input type="radio" class="form-check-input" id="author" name="account_type" value="author">
+            <label class="form-check-label" for="author">Автор</label>
+        </div>
+        <div>
+            <input type="radio" class="form-check-input" id="reader" name="account_type" value="reader" checked>
+            <label class="form-check-label" for="reader">Читатель</label>
+        </div>
         <input type="submit" class="btn btn-outline-success" value="Зарегистрироваться">
     </form>
 </div>

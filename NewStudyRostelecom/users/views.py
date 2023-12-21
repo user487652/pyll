@@ -6,15 +6,22 @@ from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.contrib.auth.models import Group
 
+
 def registration(request):
     if request.method=='POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user=form.save()
-            group=Group.objects.get(name='Authors')
-            user.groups.add(group)
+            category = request.POST['account_type']
+            if category == 'author':
+                group = Group.objects.get(name='Actions Required')
+                user.groups.add(group)
+            else:
+                group = Group.objects.get(name='Reader')
+                user.groups.add(group)
             username=form.cleaned_data.get('username')
             password=form.cleaned_data.get('password1')
+            Account.objects.create(user=user, nickname=user.username)
             authenticate(username=username,password=password)
             login(request, user)
             messages.success(request, f'{username} был зарегистрирован!')
@@ -37,6 +44,8 @@ def profile(request):
     return render(request, 'users/profile.html', context)
 
 from .forms import AccountUpdateForm, UserUpdateForm
+
+
 def profile_update(request):
     user = request.user
     account = Account.objects.get(user=user)

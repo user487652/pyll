@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+{% load users_extras %}
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -78,6 +79,55 @@
                     <hr style="background-color: white">
                     <br>
                 </ul>
+                {% elif request.user|has_group:"Authors" %}
+                <ul class="main_list">
+                    <li style="color:#FFFFFF"><i class="fa-solid fa-house"></i><a
+                            href="{% url 'home' %}"
+                            style="color:#FFFFFF">
+                        Главная страница </a></li>
+                    <br>
+                    <li style="color:#FFFFFF"><i class="fa-solid fa-newspaper"></i><a
+                            href="{% url 'news_list' %}"
+                            style="color:#FFFFFF">
+                        Все новости </a></li>
+                    <br>
+                    <li style="color:#FFFFFF"><i class="fa-solid fa-magnifying-glass"></i><a
+                            href="{% url 'news_search' %}"
+                            style="color:#FFFFFF">
+                        Поиск новостей </a></li>
+                    <br>
+                    <li style="color:#FFFFFF"><i class="fa-solid fa-people-group"></i><a
+                            href="{% url 'about' %}"
+                            style="color:#FFFFFF">
+                        Про нас </a></li>
+                    <br>
+                    <li style="color:#FFFFFF"><i class="fa-solid fa-phone"></i><a
+                            href="{% url 'contacts' %}"
+                            style="color:#FFFFFF">
+                        Контакты </a></li>
+                    <br>
+                    <br>
+                    <br>
+                    <li style="color:#FFFFFF" class="rounded border"><i class="fa-solid fa-address-card"></i><a
+                            href="{% url 'create_article' %}"
+                            style="color:#FFFFFF"
+                    >
+                        Создать статью </a></li>
+                    <hr style="background-color: white">
+                    <li style="color:#FFFFFF" class="rounded border"><i class="fa-solid fa-door-open"></i><a
+                            href="{% url 'logout' %}"
+                            style="color:#FFFFFF"
+                    >
+                        Выход </a></li>
+                    <br>
+                    <hr style="background-color: white">
+                    <br>
+                    <li style="color:#FFFFFF">
+                        Добро пожаловать,
+                        <p><a href="{% url 'profile' %}" class="podcherk">
+                            {{ request.user }} </a>!</p>
+                    </li>
+                </ul>
                 {% else %}
                 <ul class="main_list">
                     <li style="color:#FFFFFF"><i class="fa-solid fa-house"></i><a
@@ -114,11 +164,6 @@
                     >
                         Выход </a></li>
                     <br>
-                    <li style="color:#FFFFFF" class="rounded border"><i class="fa-solid fa-address-card"></i><a
-                            href="{% url 'create_article' %}"
-                            style="color:#FFFFFF"
-                    >
-                        Создать статью </a></li>
                     <hr style="background-color: white">
                     <br>
                     <li style="color:#FFFFFF">

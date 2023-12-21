@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.db.models import Avg,Count,Sum
 from django.contrib.auth.models import User
-
+from users.utils import check_group
 # Create your views here.
 
 def news_list(request):
@@ -59,7 +59,7 @@ def news_load(request):
         cntr += 1
     return HttpResponse('Новости добавлены')
 
-
+@check_group('Authors')
 @login_required(login_url=settings.LOGIN_URL)
 def create_article(request):
     if request.method == 'POST':
