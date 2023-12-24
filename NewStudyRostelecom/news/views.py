@@ -11,6 +11,7 @@ from django.contrib.auth.models import User
 from users.utils import check_group
 # Create your views here.
 
+from django.core.paginator import Paginator
 def news_list(request):
     categories = Article.categories  # создали перечень категорий
     author_list = User.objects.all()  # создали перечень авторов
@@ -26,10 +27,13 @@ def news_list(request):
     else:  # если страница открывется впервые
         selected_author = 0
         selected_category = 0
-        news = Article.objects.all().order_by('date')
-
-    context = {'news': news, 'author_list': author_list, 'selected_author': selected_author,
-               'categories': categories, 'selected_category': selected_category}
+    news = Article.objects.all().order_by('date')
+    total = len(news)
+    p = Paginator(news, 5)
+    page_number = request.GET.get('page')
+    page_obj = p.get_page(page_number)
+    context = {'news': page_obj, 'author_list': author_list, 'selected_author': selected_author,
+               'categories': categories, 'selected_category': selected_category, 'total': total}
 
     return render(request, 'news/news_list.html', context)
 
