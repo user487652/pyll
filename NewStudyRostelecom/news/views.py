@@ -6,28 +6,40 @@ import json
 from .forms import *
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
-from django.db.models import Avg,Count,Sum
+from django.db.models import Avg, Count, Sum
 from django.contrib.auth.models import User
 from users.utils import check_group
 # Create your views here.
 
 from django.core.paginator import Paginator
+
+
 def news_list(request):
     categories = Article.categories  # создали перечень категорий
     author_list = User.objects.all()  # создали перечень авторов
     if request.method == "POST":
         selected_author = int(request.POST.get('author_filter'))
         selected_category = int(request.POST.get('category_filter'))
+        request.session['selected_author'] = selected_author
+        request.session['selected_category'] = selected_category
         if selected_author == 0:  # выбраны все авторы
             news = Article.objects.all().order_by('date')
         else:
-            news = Article.objects.filter(author=selected_author).order_by('date')
+            news = Article.objects.filter(author=selected_author)
         if selected_category != 0:  # фильтруем найденные по авторам результаты по категориям
             news = news.filter(category__icontains=categories[selected_category - 1][0])
-    else:  # если страница открывется впервые
-        selected_author = 0
-        selected_category = 0
-    news = Article.objects.all().order_by('date')
+    else:  # если страница открывется
+        selected_author = request.session.get('selected_author')
+        print(selected_author)
+        if selected_author != None and selected_author != 0:  # если не пустое - находим нужные новости
+            news = Article.objects.filter(author=selected_author)
+        else:
+            news = Article.objects.all().order_by('date')
+        selected_category = request.session.get('selected_category')
+        print(selected_category)
+        if selected_category != None and selected_category != 0:  # если не пустое - находим нужные ноновсти
+            news = news.filter(category__icontains=categories[selected_category - 1][0])
+    print(news)
     total = len(news)
     p = Paginator(news, 5)
     page_number = request.GET.get('page')
@@ -36,6 +48,7 @@ def news_list(request):
                'categories': categories, 'selected_category': selected_category, 'total': total}
 
     return render(request, 'news/news_list.html', context)
+
 
 def news_detail(request, id):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
@@ -69,6 +82,7 @@ def news_load(request):
         cntr += 1
     return HttpResponse('Новости добавлены')
 
+
 @check_group('Authors')
 @login_required(login_url=settings.LOGIN_URL)
 def create_article(request):
@@ -94,23 +108,24 @@ def create_article(request):
 
 
 def news_search(request):
-    news={}
+    news = {}
     if request.method == 'POST':
         print(request.POST)
-        news=Article.objects.filter(title=request.POST.get('search_input')).order_by('date')
+        news = Article.objects.filter(title=request.POST.get('search_input')).order_by('date')
     context = {'news': news}
     return render(request, 'news/news_search.html', context)
 
+
 def search_auto(request):
-    news={}
+    news = {}
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-        q = request.GET.get('term','')
+        q = request.GET.get('term', '')
         news = Article.objects.filter(title__icontains=q)
-        results=[]
+        results = []
         for n in news:
             results.append(n.title)
-        data=json.dumps(results)
+        data = json.dumps(results)
     else:
-        data='fail'
-    mimetype='application/json'
-    return HttpResponse(data,mimetype)
+        data = 'fail'
+    mimetype = 'application/json'
+    return HttpResponse(data, mimetype)
