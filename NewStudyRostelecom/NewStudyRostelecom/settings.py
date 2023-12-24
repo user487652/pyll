@@ -61,6 +61,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'NewStudyRostelecom.urls'
+ROOT_URLCONF = 'NewStudyRostelecom.urls'
 
 TEMPLATES = [
     {
@@ -83,12 +84,21 @@ WSGI_APPLICATION = 'NewStudyRostelecom.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+DATABASES = {'default':
+                 {'ENGINE': 'django.db.backends.postgresql_psycopg2',
+                  'NAME': 'Learndb_DJ',
+                  'USER': 'postgres',
+                  'PASSWORD': '159753cC!',
+                  'HOST': '127.0.0.1',
+                  'PORT': '5432'
+                  }
+             }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -123,8 +133,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
-MEDIA_URL='media/'
-MEDIA_ROOT=os.path.join(BASE_DIR,'media')
+MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATICFILES_DIRS = [
     BASE_DIR / "static",
@@ -137,10 +147,10 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-CRISPY_ALLOWED_TEMPLATES_PACKS="bootstrap5"
-CRISPY_TEMPLATE_PACK="bootstrap5"
+CRISPY_ALLOWED_TEMPLATES_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
-LOGIN_REDIRECT_URL='home'
+LOGIN_REDIRECT_URL = 'home'
 # LOGOUT_REDIRECT_URL='home'
 
-LOGIN_URL='login'
+LOGIN_URL = 'login'
