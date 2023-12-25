@@ -23,7 +23,7 @@ def news_list(request):
         request.session['selected_author'] = selected_author
         request.session['selected_category'] = selected_category
         if selected_author == 0:  # выбраны все авторы
-            news = Article.objects.all().order_by('date')
+            news = Article.objects.all().order_by('-date')
         else:
             news = Article.objects.filter(author=selected_author)
         if selected_category != 0:  # фильтруем найденные по авторам результаты по категориям
@@ -34,7 +34,7 @@ def news_list(request):
         if selected_author != None and selected_author != 0:  # если не пустое - находим нужные новости
             news = Article.objects.filter(author=selected_author)
         else:
-            news = Article.objects.all().order_by('date')
+            news = Article.objects.all().order_by('-date')
         selected_category = request.session.get('selected_category')
         print(selected_category)
         if selected_category != None and selected_category != 0:  # если не пустое - находим нужные ноновсти
