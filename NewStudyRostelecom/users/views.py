@@ -6,6 +6,9 @@ from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.contrib.auth.models import Group
 from django.core.paginator import Paginator
+from .forms import AccountUpdateForm, UserUpdateForm
+from django.contrib.auth.decorators import login_required
+from news.models import Article
 
 
 def registration(request):
@@ -40,17 +43,10 @@ def index(request):
     # print(user_acc.birthday,user_acc.gender )
     return HttpResponse('Приложение Users')
 
-
+@login_required
 def profile(request):
     context = dict()
     return render(request, 'users/profile.html', context)
-
-
-from .forms import AccountUpdateForm, UserUpdateForm
-
-from django.contrib.auth.decorators import login_required
-from news.models import Article
-
 
 @login_required
 def add_to_favorites(request, id):
@@ -69,7 +65,7 @@ def add_to_favorites(request, id):
         messages.success(request, f"Новость {article.title} добавлена в закладки")
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
-
+@login_required
 def profile_update(request):
     user = request.user
     account = Account.objects.get(user=user)
@@ -86,7 +82,7 @@ def profile_update(request):
                    'user_form': UserUpdateForm(instance=user)}
     return render(request, 'users/edit_profile.html', context)
 
-
+@login_required
 def contact_page(request):
     if request.method == "POST":
         form = ContactForm(request.POST)
@@ -105,7 +101,7 @@ def contact_page(request):
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 
-
+@login_required
 def password_update(request):
     user = request.user
     form = PasswordChangeForm(user, request.POST)
@@ -123,14 +119,16 @@ def password_update(request):
 @login_required
 def my_news_list(request):
     categories = Article.categories  # создали перечень категорий
-    author = User.objects.get(id=request.user.id)  # создали перечень авторов
-    news = Article.objects.filter(author=author)
+    news=Article.objects.filter(author=request.user.id)
     if request.method == "POST":
         selected_category = int(request.POST.get('category_filter'))
-        if selected_category != 0:  # фильтруем найденные результаты по категориям
+        request.session['selected_category'] = selected_category
+        if selected_category != 0:  # фильтруем найденные по авторам результаты по категориям
             news = news.filter(category__icontains=categories[selected_category - 1][0])
-    else:  # если страница открывется впервые
-        selected_category = 0
+    else:  # если страница открывется
+        selected_category = request.session.get('selected_category')
+        if selected_category != None and selected_category != 0:  # если не пустое - находим нужные ноновсти
+            news = news.filter(category__icontains=categories[selected_category - 1][0])
     total = len(news)
     p = Paginator(news, 5)
     page_number = request.GET.get('page')
@@ -143,18 +141,33 @@ def my_news_list(request):
 @login_required
 def my_favorits(request):
     categories = Article.categories  # создали перечень категорий
+    author_list = User.objects.all()
     bookmarks_news = FavoriteArticle.objects.filter(user=request.user.id).values('article_id')
-    news= Article.objects.filter(id__in=bookmarks_news)
+    news = Article.objects.filter(id__in=bookmarks_news)
     if request.method == "POST":
+        selected_author = int(request.POST.get('author_filter'))
         selected_category = int(request.POST.get('category_filter'))
-        if selected_category != 0:  # фильтруем найденные результаты по категориям
+        request.session['selected_author'] = selected_author
+        request.session['selected_category'] = selected_category
+        if selected_author == 0:  # выбраны все авторы
+            news = news.all().order_by('-date')
+        else:
+            news = news.filter(author=selected_author)
+        if selected_category != 0:  # фильтруем найденные по авторам результаты по категориям
             news = news.filter(category__icontains=categories[selected_category - 1][0])
-    else:  # если страница открывется впервые
-        selected_category = 0
+    else:  # если страница открывется
+        selected_author = request.session.get('selected_author')
+        print(selected_author)
+        if selected_author != None and selected_author != 0:  # если не пустое - находим нужные новости
+            news = news.filter(author=selected_author)
+        selected_category = request.session.get('selected_category')
+        print(selected_category)
+        if selected_category != None and selected_category != 0:  # если не пустое - находим нужные ноновсти
+            news = news.filter(category__icontains=categories[selected_category - 1][0])
     total = len(news)
     p = Paginator(news, 5)
     page_number = request.GET.get('page')
     page_obj = p.get_page(page_number)
-    context = {'news': page_obj, 'total': total,
-               'categories': categories, 'selected_category': selected_category}
-    return render(request, 'users/my_news_list.html', context)
+    context = {'news': page_obj, 'total': total, 'selected_author': selected_author,
+               'categories': categories, 'selected_category': selected_category, 'author_list': author_list}
+    return render(request, 'users/my_favorits.html', context)

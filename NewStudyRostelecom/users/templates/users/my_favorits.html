@@ -10,6 +10,14 @@
         <form method="post">
             {% csrf_token %}
             <div class="form-group col-11">
+                <select class="form-select" name="author_filter">
+                    <option value="0">Все авторы</option>
+                    {% for author in author_list %}
+                    <option value="{{ author.id }}" {% if selected_author == author.id %} selected {% endif %}>
+                        {{ author.username }}
+                    </option>
+                    {% endfor %}
+                </select>
                 <select class="form-select" name="category_filter">
                     <option value="0">Все категории</option>
                     {% for c in categories %}

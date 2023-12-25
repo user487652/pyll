@@ -24,7 +24,7 @@ class Article(models.Model):
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     title = models.CharField('Название', max_length=50, default='')
     anouncement = models.TextField('Аннотация', max_length=250)
-    text = models.TextField('Текст новости', validators=[MinLengthValidator(200)])
+    text = models.TextField('Текст новости', validators=[MinLengthValidator(120)])
     date = models.DateTimeField('Дата публикации', auto_created=True, default=datetime.datetime.now())
     category = models.CharField(choices=categories, max_length=20, verbose_name='Категории')
     tags = models.ManyToManyField(to=Tag, blank=True)
