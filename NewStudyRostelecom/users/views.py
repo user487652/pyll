@@ -43,10 +43,12 @@ def index(request):
     # print(user_acc.birthday,user_acc.gender )
     return HttpResponse('Приложение Users')
 
+
 @login_required
 def profile(request):
     context = dict()
     return render(request, 'users/profile.html', context)
+
 
 @login_required
 def add_to_favorites(request, id):
@@ -65,6 +67,7 @@ def add_to_favorites(request, id):
         messages.success(request, f"Новость {article.title} добавлена в закладки")
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
+
 @login_required
 def profile_update(request):
     user = request.user
@@ -81,6 +84,7 @@ def profile_update(request):
         context = {'account_form': AccountUpdateForm(instance=account),
                    'user_form': UserUpdateForm(instance=user)}
     return render(request, 'users/edit_profile.html', context)
+
 
 @login_required
 def contact_page(request):
@@ -101,6 +105,7 @@ def contact_page(request):
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 
+
 @login_required
 def password_update(request):
     user = request.user
@@ -119,7 +124,7 @@ def password_update(request):
 @login_required
 def my_news_list(request):
     categories = Article.categories  # создали перечень категорий
-    news=Article.objects.filter(author=request.user.id)
+    news = Article.objects.filter(author=request.user.id)
     if request.method == "POST":
         selected_category = int(request.POST.get('category_filter'))
         request.session['selected_category'] = selected_category
@@ -171,3 +176,14 @@ def my_favorits(request):
     context = {'news': page_obj, 'total': total, 'selected_author': selected_author,
                'categories': categories, 'selected_category': selected_category, 'author_list': author_list}
     return render(request, 'users/my_favorits.html', context)
+
+@login_required
+def del_news(request, id):
+    article=Article.objects.get(id=id)
+    user=request.user.id
+    if article.author.id==user:
+        messages.warning(request, f"Новость {article.title} удалена")
+        article.delete()
+        return HttpResponseRedirect(request.META['HTTP_REFERER'])
+    else:
+        return redirect('login')
