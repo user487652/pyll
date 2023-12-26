@@ -46,15 +46,13 @@ def index(request):
 
 @login_required
 def profile(request):
-    context = dict()
+    count_= Article.objects.filter(author=request.user).count()
+    context = {'count_news': count_}
     return render(request, 'users/profile.html', context)
 
 
 @login_required
 def add_to_favorites(request, id):
-    name = 'Василий'
-    address = 'Москва'
-
     article = Article.objects.get(id=id)
     # проверям есть ли такая закладка с этой новостью
     bookmark = FavoriteArticle.objects.filter(user=request.user.id,
