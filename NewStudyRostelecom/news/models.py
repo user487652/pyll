@@ -74,7 +74,7 @@ class Image(models.Model):
 class ViewCount(models.Model):
     article = models.ForeignKey(Article,on_delete=models.CASCADE,
                                 related_name='views')
-    ip_address = models.GenericIPAddressField()
+    ip_address = models.CharField(null=True, max_length=50)
     view_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
