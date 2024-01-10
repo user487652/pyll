@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-gz2@o4hqt*fc_75zuc0v=pi+9g^pc2s^elaj1e#_61y#26#ez0
 DEBUG = True
 
 # ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['infogipsy123.pythonanywhere.com','127.0.0.1']
+ALLOWED_HOSTS = ['infogipsy123.pythonanywhere.com','127.0.0.1','localhost','192.168.0.79']
 
 # Application definition
 
