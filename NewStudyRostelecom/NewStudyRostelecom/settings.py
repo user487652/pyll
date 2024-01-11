@@ -75,6 +75,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'NewStudyRostelecom.wsgi.application'
 
+if DEBUG:
+    CSRF_TRUSTED_ORIGINS = ['http://*', 'https://*']
+if not DEBUG:
+    CSRF_TRUSTED_ORIGINS = ['http://*.your-domain.ru', 'https://*.your-domain.ru'] # FIX admin CSRF token issue
+
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
